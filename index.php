@@ -108,13 +108,40 @@
 				$str .= "Количество страниц: ".$this->pageCount."<br>";
 				return $str;
 			}
-		}		
+		}
+
+	class ShopProductWriter{
+		private $products = array();
+
+		public function addProduct(ShopProduct $ShopProduct){
+			$this->products[] = $ShopProduct;
+		}
+
+		public function write(){
+			$str = "";
+			foreach ($this->products as $shopProduct) {
+				$str .= $shopProduct->getTitle().": ";
+				$str .= $shopProduct->getProducer();
+				$str .= " ({$shopProduct->getPrice()})\n";
+				//print_r($shopProduct);
+			}
+
+			print $str;
+		}
+	}			
 
 	/*$newCD = new bookProduct("Made in Japan", "Deep Purple", 12.99, 65.32);
 	print $newCD->getTitle();
 	$newCD->setDiscount(13);
 	print $newCD->getDiscount();*/
 
-	print_r(ShopProduct::getInstance(2, $link));
+	$a1 = ShopProduct::getInstance(2, $link);
+	$a2 = ShopProduct::getInstance(1, $link);
+	$a3 = ShopProduct::getInstance(1, $link);
+
+	$wrt = new ShopProductWriter;
+	$wrt->addProduct($a1);
+	$wrt->addProduct($a2);
+	$wrt->write();
 
 ?>
